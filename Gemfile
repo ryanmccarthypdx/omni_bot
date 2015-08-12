@@ -6,6 +6,7 @@ gem 'sinatra-contrib', :require => 'sinatra/reloader'
 gem 'pg'
 gem 'rake'
 gem 'pry'
+gem 'dotenv'
 
 group :test do
   gem 'rspec'
