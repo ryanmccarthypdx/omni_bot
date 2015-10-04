@@ -4,6 +4,7 @@ class CreateSubscriptions < ActiveRecord::Migration
       t.integer :user_id
       t.integer :service_id
       t.string :option
+      t.timestamps null: false
     end
   end
 end

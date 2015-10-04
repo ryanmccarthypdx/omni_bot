@@ -24,9 +24,11 @@ ActiveRecord::Schema.define(version: 20151004054316) do
   end
 
   create_table "subscriptions", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "service_id"
-    t.string  "option"
+    t.integer  "user_id"
+    t.integer  "service_id"
+    t.string   "option"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
