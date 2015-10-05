@@ -7,6 +7,9 @@ gem 'pg'
 gem 'rake'
 gem 'pry'
 gem 'dotenv'
+gem 'attr_encrypted'
+gem 'bcrypt', :require => 'bcrypt'
+# gem 'spring'
 
 group :test do
   gem 'rspec'
