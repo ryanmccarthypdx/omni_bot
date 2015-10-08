@@ -6,9 +6,22 @@ describe User do
   it { should validate_presence_of :phone }
 
   describe '#create' do
-    it "should validate uniqueness of phone" do
-      User.create(phone: "1234")
-      expect(User.create(phone: "1234").valid?).to eq false
+    it "should invalidate when non-unique phone number is passed in" do
+      User.create(phone: ENV['KNOWN_REAL_CELL_NUMBER'])
+      expect(User.create(phone: ENV['KNOWN_REAL_CELL_NUMBER']).valid?).to eq false
+    end
+
+    it "should invalidate when a non-US number is passed in" do
+      canadian_number = "13065692323"
+      expect(User.create(phone: canadian_number).valid?).to eq false
+    end
+
+    it "should invalidate when a non-mobile number is passed in" do
+      expect(User.create(phone: ENV['CANADIAN_CELL_NUMBER']).valid?).to eq false
+    end
+
+    it "should validate when a mobile, US-based number is passed in" do
+      expect(User.create(phone: ENV['KNOWN_REAL_CELL_NUMBER']).valid?).to eq true
     end
   end
 end

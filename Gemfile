@@ -5,10 +5,11 @@ gem 'sinatra-activerecord'
 gem 'sinatra-contrib', :require => 'sinatra/reloader'
 gem 'pg'
 gem 'rake'
-gem 'pry'
+gem 'pry-byebug'
 gem 'dotenv'
 gem 'attr_encrypted'
 gem 'bcrypt', :require => 'bcrypt'
+gem 'phonelib'
 # gem 'spring'
 
 group :test do
