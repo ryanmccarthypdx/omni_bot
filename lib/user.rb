@@ -26,8 +26,8 @@ class User < ActiveRecord::Base
   end
 
   def is_phone_unique?
-    matching_users = User.all.select{ |u| u.phone == self.phone && u.id != self.id }
-    unless matching_users.count == 0
+    matching_user = User.find_by(encrypted_phone: User.encrypt_phone(self.phone))
+    if matching_user && matching_user.id != id
       errors.add(:phone, "number is already registered!  Please login.")
     end
   end
