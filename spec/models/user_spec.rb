@@ -4,6 +4,7 @@ describe User do
   it { should have_many :subscriptions }
   it { should have_many :services }
   it { should validate_presence_of :phone }
+  it { should validate_confirmation_of :password }
 
   describe '#create' do
     it "should invalidate when non-unique phone number is passed in" do

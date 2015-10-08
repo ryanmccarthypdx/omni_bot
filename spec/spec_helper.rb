@@ -7,6 +7,8 @@ Bundler.require :default, :test
 Capybara.app = Sinatra::Application
 
 RSpec.configure do |config|
+  config.include Capybara::DSL
+  
   config.after(:each) do
     User.all.each { |u| u.destroy }
     Subscription.all.each { |s| s.destroy }
