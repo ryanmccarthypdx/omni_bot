@@ -1,46 +1,48 @@
 <div class="row">
-  <div class="col-sm-6">
+  <div class="col-xs-6">
     <h3>Existing user login</h3>
     <form class="form-horizontal" id="login" action="/login" method="post">
+      <span class='alert-msg'><%= flash[:login_error] %></span>
       <div class="form-group">
-        <label class="col-sm-3" for="phone">Mobile Phone:</label>
-        <div class="col-sm-9">
+        <label class="col-xs-4 control-label" for="phone">Mobile Phone:</label>
+        <div class="col-xs-8">
           <input class="form-control" type="text" name="phone" placeholder="15038675309">
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-3" for="password">Password:</label>
-        <div class="col-sm-9">
+        <label class="col-xs-4 control-label" for="password">Password:</label>
+        <div class="col-xs-8">
           <input class="form-control" type="password" name="password">
         </div>
       </div>
       <button class="btn btn-primary" name="submit">Login</button>
     </form>
   </div>
-  <div class="col-sm-6">
+  <div class="col-xs-6">
     <h3>New user sign up</h3>
     <form class="form-horizontal" id="login" action="/register" method="post">
-      <div class="form-group">
-        <label class="col-sm-3" for="phone">Mobile Phone:</label>
-        <div class="col-sm-9">
+      <span class='alert-msg'><%= flash[:create_error] %></span>
+      <div class="form-group <%= "has-error" if flash[:error_type] == :phone %>">
+        <label class="col-xs-4 control-label" for="phone">Mobile Phone:</label>
+        <div class="col-xs-8">
           <input class="form-control" type="text" name="phone" placeholder="15038675309">
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-3" for="location">Zip Code:</label>
-        <div class="col-sm-9">
+        <label class="col-xs-4 control-label" for="location">Zip Code:</label>
+        <div class="col-xs-8">
           <input class="form-control" type="text" name="location" placeholder="Optional; needed for location-based services">
         </div>
       </div>
-      <div class="form-group">
-        <label class="col-sm-3" for="password">Password:</label>
-        <div class="col-sm-9">
+      <div class="form-group <%= "has-error" if flash[:error_type] == :password %>">
+        <label class="col-xs-4 control-label" for="password">Password:</label>
+        <div class="col-xs-8">
           <input class="form-control" type="password" name="password">
         </div>
       </div>
-      <div class="form-group">
-        <label class="col-sm-3" for="password_confirmation">Confirm password:</label>
-        <div class="col-sm-9">
+      <div class="form-group <%= "has-error" if flash[:error_type] == :password_confirmation %>">
+        <label class="col-xs-4 control-label" for="password_confirmation">Confirm password:</label>
+        <div class="col-xs-8">
           <input class="form-control" type="password" name="password_confirmation">
         </div>
       </div>

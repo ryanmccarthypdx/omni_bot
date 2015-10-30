@@ -10,6 +10,7 @@ gem 'dotenv'
 gem 'attr_encrypted'
 gem 'bcrypt', :require => 'bcrypt'
 gem 'phonelib'
+gem 'sinatra-flash', :require => 'sinatra/flash'
 # gem 'spring'
 
 group :test do

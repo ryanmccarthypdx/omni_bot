@@ -1,3 +1,9 @@
+.alert-msg {
+  color: #a94442;
+  font-size: 18px;
+  line-height: 20px;
+}
+
 .form-horizontal {
   border: solid 1px grey;
   padding: 20px;
