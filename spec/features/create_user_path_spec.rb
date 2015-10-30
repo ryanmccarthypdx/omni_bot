@@ -14,7 +14,7 @@ describe "the user creation process" do
 
   it "should throw an error if you attempt to create a user without a phone number" do
     visit '/'
-    click-button "Create account"
-    expect(page).to have_errors
+    click_button "Create account"
+    expect(page).to have_content("Phone number is not a valid US mobile number!")
   end
 end

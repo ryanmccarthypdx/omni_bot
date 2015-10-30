@@ -39,7 +39,6 @@ post '/register' do
     session[:id] = @user.id
     redirect '/confirm_phone'
   else
-    binding.pry
     flash[:error_type] = @user.errors.messages.keys.first
     flash[:create_error] = @user.errors.full_messages.to_sentence
     redirect '/'
