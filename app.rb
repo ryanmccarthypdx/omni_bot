@@ -13,6 +13,10 @@ helpers do
   def logged_in?
     session[:id]
   end
+
+  def current_user
+    @current_user = User.find(session[:id])
+  end
 end
 
 get '/' do
@@ -43,4 +47,8 @@ post '/register' do
     flash[:create_error] = @user.errors.full_messages.to_sentence
     redirect '/'
   end
+end
+
+get '/confirm_phone' do
+  erb :confirm_phone
 end
