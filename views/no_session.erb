@@ -4,15 +4,15 @@
     <form class="form-horizontal" id="login" action="/login" method="post">
       <span class='alert-msg'><%= flash[:login_error] %></span>
       <div class="form-group">
-        <label class="col-xs-4 control-label" for="phone">Mobile Phone:</label>
+        <label class="col-xs-4 control-label" for="login_phone">Mobile Phone:</label>
         <div class="col-xs-8">
-          <input class="form-control" type="text" name="phone" placeholder="15038675309">
+          <input class="form-control" type="text" name="login_phone" placeholder="15038675309">
         </div>
       </div>
       <div class="form-group">
-        <label class="col-xs-4 control-label" for="password">Password:</label>
+        <label class="col-xs-4 control-label" for="login_password">Password:</label>
         <div class="col-xs-8">
-          <input class="form-control" type="password" name="password">
+          <input class="form-control" type="password" name="login_password">
         </div>
       </div>
       <button class="btn btn-primary" name="submit">Login</button>
@@ -23,9 +23,9 @@
     <form class="form-horizontal" id="login" action="/register" method="post">
       <span class='alert-msg'><%= flash[:create_error] %></span>
       <div class="form-group <%= "has-error" if flash[:error_type] == :phone %>">
-        <label class="col-xs-4 control-label" for="phone">Mobile Phone:</label>
+        <label class="col-xs-4 control-label" for="create_phone">Mobile Phone:</label>
         <div class="col-xs-8">
-          <input class="form-control" type="text" name="phone" placeholder="15038675309">
+          <input class="form-control" type="text" name="create_phone" placeholder="15038675309">
         </div>
       </div>
       <div class="form-group">
@@ -35,9 +35,9 @@
         </div>
       </div>
       <div class="form-group <%= "has-error" if flash[:error_type] == :password %>">
-        <label class="col-xs-4 control-label" for="password">Password:</label>
+        <label class="col-xs-4 control-label" for="create_password">Password:</label>
         <div class="col-xs-8">
-          <input class="form-control" type="password" name="password">
+          <input class="form-control" type="password" name="create_password">
         </div>
       </div>
       <div class="form-group <%= "has-error" if flash[:error_type] == :password_confirmation %>">

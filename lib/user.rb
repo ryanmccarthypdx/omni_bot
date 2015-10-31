@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password
   before_save :encrypt_password
   validate :validation_suite
+  validates_presence_of :password
 
   def validation_suite
     is_phone_present?

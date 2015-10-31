@@ -4,25 +4,32 @@ describe User do
   it { should have_many :subscriptions }
   it { should have_many :services }
   it { should validate_presence_of :phone }
+  it { should validate_presence_of :password }
   it { should validate_confirmation_of :password }
+
+  let(:user) { User.new(password: "password") }
 
   describe '#create' do
     it "should invalidate when non-unique phone number is passed in" do
-      User.create(phone: ENV['KNOWN_REAL_CELL_NUMBER'])
-      expect(User.create(phone: ENV['KNOWN_REAL_CELL_NUMBER']).valid?).to eq false
+      User.create(phone: ENV['KNOWN_REAL_CELL_NUMBER'], password: "foobar")
+      user.phone = ENV['KNOWN_REAL_CELL_NUMBER']
+      expect(user.valid?).to eq false
     end
 
     it "should invalidate when a non-US number is passed in" do
       canadian_number = "13065692323"
-      expect(User.create(phone: canadian_number).valid?).to eq false
+      user.phone = canadian_number
+      expect(user.valid?).to eq false
     end
 
     it "should invalidate when a non-mobile number is passed in" do
-      expect(User.create(phone: ENV['CANADIAN_CELL_NUMBER']).valid?).to eq false
+      user.phone = ENV['REAL_LANDLINE_NUMBER']
+      expect(user.valid?).to eq false
     end
 
     it "should validate when a mobile, US-based number is passed in" do
-      expect(User.create(phone: ENV['KNOWN_REAL_CELL_NUMBER']).valid?).to eq true
+      user.phone = ENV['KNOWN_REAL_CELL_NUMBER']
+      expect(user.valid?).to eq true
     end
   end
 end

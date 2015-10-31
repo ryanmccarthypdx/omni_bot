@@ -31,9 +31,9 @@ post '/register' do
     redirect '/'
   end
   @user = User.new(
-    phone: params[:phone],
+    phone: params[:create_phone],
     location: params[:location],
-    password: params[:password],
+    password: params[:create_password],
     password_confirmation: params[:password_confirmation])
   if @user.save
     session[:id] = @user.id
