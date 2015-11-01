@@ -1,5 +1,3 @@
-require 'bcrypt'
-
 class User < ActiveRecord::Base
   has_many :subscriptions
   has_many :services, through: :subscriptions
@@ -57,7 +55,7 @@ class User < ActiveRecord::Base
   def send_out_new_code
     ensure_confirmable
     set_new_confirmation_code
-    # send_confirmation_message
+    send_confirmation_message
   end
 
 private
@@ -73,5 +71,11 @@ private
     code_digit_set = ENV['CONFIRMATION_CODE_SET'].split('')
     self.confirmation_code = code_digit_set.shuffle[0,6].join
     self.confirmation_time = Time.now
+  end
+
+  def send_confirmation_message
+    text = "Welcome to OmniBot! Please enter this verification code: #{confirmation_code}"
+    message = Message.new(body: text, recipient: phone)
+    # message.send
   end
 end

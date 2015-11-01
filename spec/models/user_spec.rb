@@ -103,6 +103,11 @@ describe User do
         expect(user.confirmation_time.eql?(original_time)).to eq false
       end
 
+      it "should generate a new message" do
+        expect(user).to receive(:send_confirmation_message)
+        user.send_out_new_code
+      end
+
     end
   end
 end

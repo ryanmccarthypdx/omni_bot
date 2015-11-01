@@ -11,6 +11,7 @@ gem 'attr_encrypted'
 gem 'bcrypt', :require => 'bcrypt'
 gem 'phonelib'
 gem 'sinatra-flash', :require => 'sinatra/flash'
+gem 'twilio-ruby'
 # gem 'spring'
 
 group :test do
