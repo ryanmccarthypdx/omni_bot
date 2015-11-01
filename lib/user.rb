@@ -56,7 +56,7 @@ class User < ActiveRecord::Base
 
   def send_out_new_code
     ensure_confirmable
-    # set_new_confirmation_code
+    set_new_confirmation_code
     # send_confirmation_message
   end
 
@@ -69,4 +69,9 @@ private
     end
   end
 
+  def set_new_confirmation_code
+    code_digit_set = ENV['CONFIRMATION_CODE_SET'].split('')
+    self.confirmation_code = code_digit_set.shuffle[0,6].join
+    self.confirmation_time = Time.now
+  end
 end

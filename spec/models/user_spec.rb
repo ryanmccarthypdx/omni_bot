@@ -46,9 +46,34 @@ describe User do
     let(:user) { FactoryGirl.create(:user) }
 
     describe '#send_out_code' do
-      it "should raise an error if too many confirmation attempts have happened" do
-        user.total_confirmations = 5
-        expect { user.send_out_new_code }.to raise_error(OmniBotError)
+      context "with too many confirmations" do
+
+        before do
+          user.total_confirmations = 5
+        end
+
+        it "should raise an error if too many confirmation attempts have happened" do
+          user.total_confirmations = 5
+          expect{ user.send_out_new_code }.to raise_error(OmniBotError)
+        end
+
+        it "should increment the total_confirmations" do
+          begin
+            user.send_out_new_code
+          rescue
+            expect(user.total_confirmations).to eq 6
+          end
+        end
+
+        it "should not set a new confirmation code" do
+          original_code = user.confirmation_code
+          expect(user).to receive(:set_new_confirmation_code).exactly(0).times
+          begin
+            user.send_out_new_code
+          rescue
+            expect(user.confirmation_code).to eq original_code
+          end
+        end
       end
 
       it "should increment total_confirmations by one" do
@@ -56,6 +81,28 @@ describe User do
         user.send_out_new_code
         expect(user.total_confirmations).to eq(original_confirmations + 1)
       end
+
+      it "should set and save a new confirmation code and time" do
+        user.send_out_new_code
+        expect(user.confirmation_code.length).to eq 6
+        expect(user.confirmation_code.class).to eq String
+        expect(user.confirmation_time.class).to eq Time
+      end
+
+      it "should reset a new code when called the second time" do
+        user.send_out_new_code
+        original_code = user.confirmation_code
+        user.send_out_new_code
+        expect(user.confirmation_code.eql?(original_code)).to eq false
+      end
+
+      it "should reset the confirmation_time" do
+        user.send_out_new_code
+        original_time = user.confirmation_time
+        user.send_out_new_code
+        expect(user.confirmation_time.eql?(original_time)).to eq false
+      end
+
     end
   end
 end
