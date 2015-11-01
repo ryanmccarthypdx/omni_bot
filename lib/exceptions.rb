@@ -1,0 +1,2 @@
+class OmniBotError < StandardError
+end 

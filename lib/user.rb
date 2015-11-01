@@ -55,9 +55,18 @@ class User < ActiveRecord::Base
   # end
 
   def send_out_new_code
-    # ensure_confirmable
+    ensure_confirmable
     # set_new_confirmation_code
     # send_confirmation_message
+  end
+
+private
+
+  def ensure_confirmable
+    self.total_confirmations += 1
+    if self.total_confirmations > 5
+      raise OmniBotError, "This number has had too many confirmation attempts."
+    end
   end
 
 end
