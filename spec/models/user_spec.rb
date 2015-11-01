@@ -31,5 +31,15 @@ describe User do
       user.phone = ENV['KNOWN_REAL_CELL_NUMBER']
       expect(user.valid?).to eq true
     end
+
+    it "should call send_out_new_code after_create" do
+      user.phone = ENV['KNOWN_REAL_CELL_NUMBER']
+      expect(user).to receive(:send_out_new_code)
+      user.save
+    end
+  end
+
+  describe '#send_out_code' do
+    # it ""
   end
 end

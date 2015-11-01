@@ -34,21 +34,25 @@ post '/register' do
   if logged_in?
     redirect '/'
   end
-  @user = User.new(
+  user = User.new(
     phone: params[:create_phone],
     location: params[:location],
     password: params[:create_password],
     password_confirmation: params[:password_confirmation])
-  if @user.save
-    session[:id] = @user.id
+  if user.save
+    session[:id] = user.id
     redirect '/confirm_phone'
   else
-    flash[:error_type] = @user.errors.messages.keys.first
-    flash[:create_error] = @user.errors.full_messages.to_sentence
+    flash[:error_type] = user.errors.messages.keys.first
+    flash[:create_error] = user.errors.full_messages.to_sentence
     redirect '/'
   end
 end
 
 get '/confirm_phone' do
   erb :confirm_phone
+end
+
+post '/confirm_phone' do
+
 end

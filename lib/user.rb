@@ -4,13 +4,14 @@ class User < ActiveRecord::Base
   has_many :subscriptions
   has_many :services, through: :subscriptions
 
-  attr_accessor :location, :password
+  attr_accessor :password
   attr_encrypted :phone, :key => ENV["ATTR_ENCRYPTED_KEY"]
 
   validates_confirmation_of :password
   before_save :encrypt_password
   validate :validation_suite
   validates_presence_of :password
+  after_create :send_out_new_code
 
   def validation_suite
     is_phone_present?
@@ -19,7 +20,7 @@ class User < ActiveRecord::Base
   end
 
   def is_phone_US_mobile?
-    parsed_number = Phonelib.parse(self.phone)
+    parsed_number = Phonelib.parse(phone)
     valid_types = [:mobile, :sms_services, :fixed_or_mobile]
     unless parsed_number.possible? && parsed_number.valid_for_country?('US') && valid_types.include?(parsed_number.type)
       errors.add(:phone, "number is not a valid US mobile number!")
@@ -27,7 +28,7 @@ class User < ActiveRecord::Base
   end
 
   def is_phone_unique?
-    matching_user = User.find_by(encrypted_phone: User.encrypt_phone(self.phone))
+    matching_user = User.find_by(encrypted_phone: User.encrypt_phone(phone))
     if matching_user && matching_user.id != id
       errors.add(:phone, "number is already registered!  Please login.")
     end
@@ -52,4 +53,11 @@ class User < ActiveRecord::Base
   #     nil
   #   end
   # end
+
+  def send_out_new_code
+    # ensure_confirmable
+    # set_new_confirmation_code
+    # send_confirmation_message
+  end
+
 end
