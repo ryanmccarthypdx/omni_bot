@@ -107,7 +107,6 @@ describe User do
         expect(user).to receive(:send_confirmation_message)
         user.send_out_new_code
       end
-
     end
   end
 end

@@ -76,6 +76,6 @@ private
   def send_confirmation_message
     text = "Welcome to OmniBot! Please enter this verification code: #{confirmation_code}"
     message = Message.new(body: text, recipient: phone)
-    # message.send
+    message.send
   end
 end
