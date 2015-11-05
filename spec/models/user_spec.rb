@@ -86,6 +86,7 @@ describe User do
         expect(user.confirmation_code.length).to eq 6
         expect(user.confirmation_code.class).to eq String
         expect(user.confirmation_time.class).to eq Time
+        expect(user.confirmed).to eq false
       end
 
       it "should reset a new code when called the second time" do
@@ -105,6 +106,34 @@ describe User do
       it "should generate a new message" do
         expect(user).to receive(:send_confirmation_message)
         user.send_out_new_code
+      end
+    end
+
+    describe '#confirm_phone' do
+      it "should throw an error if the confirmation time is expired" do
+        user.confirmation_time -= ((CODE_VALID_TIME * 60) + 1)
+        expect{ user.confirm_phone(user.confirmation_code) }.to raise_error("This code has expired. Please click 'Resend Code' below")
+      end
+
+      it "should throw an error if nothing is entered" do
+        expect{ user.confirm_phone("") }.to raise_error("The code you entered is not correct")
+      end
+
+      it "should throw an error if the wrong code is entered" do
+        user.confirmation_code = "ABCDEF"
+        expect { user.confirm_phone("ZYXWVU") }.to raise_error("The code you entered is not correct")
+      end
+
+      it "should ignore whitespace in the input" do
+        user.confirmation_code = "ABC123"
+        user.confirm_phone("  A B C 1 2   3  ")
+        expect(user.confirmed).to eq true
+      end
+
+      it "should ignore capitalization in the input" do
+        user.confirmation_code = "ABC123"
+        user.confirm_phone("aBc123")
+        expect(user.confirmed).to eq true
       end
     end
   end

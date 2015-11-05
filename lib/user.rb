@@ -53,14 +53,34 @@ class User < ActiveRecord::Base
   # end
 
   def send_out_new_code
-    ensure_confirmable
+    ensure_eligble_for_new_code
     set_new_confirmation_code
     send_confirmation_message
   end
 
+  def confirm_phone(code_input)
+    ensure_eligible_to_be_confirmed
+    confirm_verification_code(code_input)
+  end
+
 private
 
-  def ensure_confirmable
+  def confirm_verification_code(code_input)
+    if code_input.gsub(/\W/, "").upcase == self.confirmation_code
+      self.confirmed = true
+      self.save!
+    else
+      raise OmniBotError, "The code you entered is not correct"
+    end
+  end
+
+  def ensure_eligible_to_be_confirmed
+    if Time.now > (self.confirmation_time + (CODE_VALID_TIME * 60))
+      raise OmniBotError, "This code has expired. Please click 'Resend Code' below"
+    end
+  end
+
+  def ensure_eligble_for_new_code
     self.total_confirmations += 1
     if self.total_confirmations > MAX_CONFIRMATIONS
       raise OmniBotError, "This number has had too many confirmation attempts."

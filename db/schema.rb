@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20151031192230) do
     t.datetime "updated_at",                          null: false
     t.string   "confirmation_code"
     t.datetime "confirmation_time"
-    t.boolean  "confirmed?",          default: false, null: false
+    t.boolean  "confirmed",           default: false, null: false
     t.integer  "total_confirmations", default: 0,     null: false
   end
 
