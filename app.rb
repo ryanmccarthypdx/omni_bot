@@ -7,7 +7,9 @@ Dotenv.load
 Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
 
 enable :sessions
-set :session_secret, ENV['SESSION_SECRET']
+
+CODE_VALID_TIME = 10 #minutes
+MAX_CONFIRMATIONS = 5
 
 helpers do
   def logged_in?

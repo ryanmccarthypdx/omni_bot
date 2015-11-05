@@ -34,7 +34,7 @@ describe "the user creation process" do
     expect(page).to have_content("Password confirmation doesn't match Password")
   end
 
-  it "should redirect to the phone confirmation page if you put in valid info" do
+  it "should redirect to confirmation page if you put in valid info" do
     visit '/'
     fill_in "create_phone", with: ENV["KNOWN_REAL_CELL_NUMBER"]
     fill_in "create_password", with: "password"

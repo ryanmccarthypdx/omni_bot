@@ -9,6 +9,15 @@
   padding: 20px;
 }
 
-.btn-primary {
+.wide-btn {
   width: 100%;
+}
+
+.mini-form {
+  max-width: 400px;
+}
+
+.control-label {
+  text-align: right;
+  padding-top: 7px;
 }
