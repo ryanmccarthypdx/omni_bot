@@ -53,7 +53,6 @@ describe User do
         end
 
         it "should raise an error if too many confirmation attempts have happened" do
-          user.total_confirmations = 5
           expect{ user.send_out_new_code }.to raise_error(OmniBotError)
         end
 

@@ -19,4 +19,5 @@ group :test do
   gem 'capybara'
   gem 'shoulda-matchers'
   gem 'factory_girl'
+  gem 'rack_session_access'
 end

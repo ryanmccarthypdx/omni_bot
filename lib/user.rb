@@ -5,10 +5,10 @@ class User < ActiveRecord::Base
   attr_accessor :password
   attr_encrypted :phone, :key => ENV["ATTR_ENCRYPTED_KEY"]
 
-  validates_confirmation_of :password
+  validates_confirmation_of :password, on: :create
   before_save :encrypt_password
   validate :validation_suite
-  validates_presence_of :password
+  validates_presence_of :password, on: :create
   after_create :send_out_new_code
 
   def validation_suite
@@ -62,7 +62,7 @@ private
 
   def ensure_confirmable
     self.total_confirmations += 1
-    if self.total_confirmations > 5
+    if self.total_confirmations > MAX_CONFIRMATIONS
       raise OmniBotError, "This number has had too many confirmation attempts."
     end
   end
@@ -71,6 +71,7 @@ private
     code_digit_set = ENV['CONFIRMATION_CODE_SET'].split('')
     self.confirmation_code = code_digit_set.shuffle[0,6].join
     self.confirmation_time = Time.now
+    self.save!
   end
 
   def send_confirmation_message

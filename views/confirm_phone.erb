@@ -1,8 +1,8 @@
 <h1>Phone confirmation</h1>
 <div class="mini-form">
-  <form class="form-horizontal" id="confirmation" action="/confirm_phone" method="put">
+  <span class='alert-msg'><%= flash[:confirm_error] %></span>
+  <form class="form-horizontal" id="confirmation" action="/confirm_phone" method="post">
     <h3>We have sent a confirmation code to your phone</h3>
-    <span class='alert-msg'><%= flash[:confirm_error] %></span>
     <div class="form-group">
       <label class="col-xs-2 control-label" for="phone_confirm">Code:</label>
       <div class="col-xs-10">
@@ -10,10 +10,10 @@
       </div>
     </div>
     <button class="btn wide-btn btn-primary" name="submit">Submit</button>
+  </form>
+  <form class="form-horizontal" id="resend_confirmation" action="/resend_confirmation" method="post">
     <p><em>Note: confirmation codes are only valid for <%= CODE_VALID_TIME %> minutes</em></p>
     <p><em>You may only receive <%= MAX_CONFIRMATIONS %> confirmation codes before your account is locked, so give it a few minutes if you don't receive the code right away.</em></p>
-    <div>
-      <a href="/resend_confirmation" class="btn wide-btn btn-danger">Resend Code</a>
-    </div>
+    <button method="post" href="/resend_confirmation" class="btn wide-btn btn-danger">Resend Code</button>
   </form>
 </div>

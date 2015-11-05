@@ -58,3 +58,12 @@ end
 post '/confirm_phone' do
 
 end
+
+post '/resend_confirmation' do
+  begin
+    current_user.send_out_new_code
+  rescue => e
+    flash[:confirm_error] = e.message
+  end
+  redirect '/confirm_phone'
+end
