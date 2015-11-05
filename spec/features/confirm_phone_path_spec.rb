@@ -36,11 +36,18 @@ describe "the phone confirmation process" do
   end
 
   it "should flash the expired error if code is older than CODE_VALID_TIME" do
-    user.confirmation_time -= (CODE_VALID_TIME + 1).min
+    user.confirmation_time -= ((CODE_VALID_TIME * 60) + 1)
     user.save
     visit "/confirm_phone"
     fill_in "phone_confirm", with: user.confirmation_code
     click_button("Submit")
     expect(page).to have_content("This code has expired. Please click 'Resend Code' below")
+  end
+
+  it "should redirect to the services page if phone code is confirmed" do
+    visit "/confirm_phone"
+    fill_in "phone_confirm", with: user.confirmation_code
+    click_button("Submit")
+    expect(page).to have_content("Available Services")
   end
 end

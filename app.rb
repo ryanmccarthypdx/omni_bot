@@ -56,7 +56,13 @@ get '/confirm_phone' do
 end
 
 post '/confirm_phone' do
-
+  begin
+    current_user.confirm_phone(params[:phone_confirm])
+    redirect '/services'
+  rescue => e
+    flash[:confirm_error] = e.message
+    redirect '/confirm_phone'
+  end
 end
 
 post '/resend_confirmation' do
@@ -66,4 +72,9 @@ post '/resend_confirmation' do
     flash[:confirm_error] = e.message
   end
   redirect '/confirm_phone'
+end
+
+get '/services' do
+
+  erb :services
 end
